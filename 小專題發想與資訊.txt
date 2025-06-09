@@ -1,0 +1,442 @@
+
+一、【大阪城】（Osaka Castle）
+
+	知名度高，是日本代表性景點之一。
+
+	無版權照片在多數圖庫網站上都可以找到。
+
+	關鍵字建議：Osaka Castle, 大阪城, Osaka travel
+
+	推薦網站：
+
+		Pixabay
+
+		Unsplash
+
+		Pexels
+
+		Wikimedia Commons（搜尋「Osaka Castle」）
+
+二、【靜岡】（Shizuoka）
+
+	是一個地區名，範圍廣，包括富士山、茶園、伊豆等。
+
+	雖不是單一景點，但以富士山背景的茶園等場景最常見。
+
+	關鍵字建議：Shizuoka, Shizuoka tea field, Mount Fuji Shizuoka
+
+	推薦網站：
+
+		同上 Pixabay / Unsplash / Pexels / Wikimedia
+
+		若找日本本地圖庫，可試：
+
+		ぱくたそ（Pakutaso）（免費日系圖庫，日文介面）
+
+三、【大甲媽祖】（Dajia Mazu）
+
+	是台灣宗教文化主題，相對較少見於國際圖庫。
+
+	有一些圖片可能存在於：
+
+	台灣在地攝影師的 CC 授權照片（如 Flickr）
+
+	台灣政府相關開放資料平台（如觀光局）
+
+	關鍵字建議：大甲媽祖, Dajia Mazu, 媽祖遶境, Mazu Pilgrimage
+
+	建議管道：
+
+		Flickr（搜尋後請點選「Commercial use allowed」或「CC授權」）
+
+		文化部 open data（有些活動影像可免費使用）
+
+		交通部觀光署 媒體素材區
+
+		或自行拍攝／使用 Creative Commons 授權的攝影師作品（要標明來源）
+
+		現代網頁大量採用下滑式（scroll-based）瀏覽設計，
+		主要就是為了迎合行動裝置（手機和平板）的使用習慣與限制。
+
+
+以下是更詳細的原因與說明：
+
+	✅ 為什麼「下滑式設計」受歡迎？
+
+		1. 行動裝置使用者操作方便
+
+			手機螢幕小、無滑鼠，因此「點選小按鈕或分頁」不如「一直滑動」來得直覺。
+
+			手指滑動是最自然的操作行為。
+
+		2. 單頁設計（Single Page Application, SPA）流行
+			
+			把資訊集中在一頁中，透過滑動呈現不同段落。
+
+			載入速度快、用戶停留時間長。
+
+			常見於產品介紹、活動頁、個人作品集等。
+
+		3. 視覺敘事性更強
+		
+			可以用視差滾動（parallax scroll）、動畫、圖片敘事方式來引導瀏覽者。
+
+			類似講故事的感覺，尤其適合旅遊、文化、品牌網站。
+
+		4. SEO 與頁面分享策略的改變
+		
+			過去多頁式網站對 SEO 比較有利，但現在 Google 也能正確索引單頁網站內容。
+
+			若需要分段分享，開發者可以用 #anchor 或 JavaScript 實現。
+
+	⚠️ 下滑式也有挑戰：
+	
+	資訊量過大時不適合：用戶會覺得太長、難以找到重點。
+
+	載入時間可能增加（尤其圖片多、動畫多時）。
+
+	不利於特定功能頁：例如購物車、論壇、教學平台通常還是用傳統多頁式結構較好。
+
+	📱 總結：
+	
+	「下滑式瀏覽」確實是因應行動裝置優先（Mobile First）設計原則而興起的趨勢，也符合現代使用者對於簡潔、流暢、視覺導向的網站使用體驗。
+
+	如果你正在做旅遊網站個人專題，採用下滑式（單頁式）結構會是一個非常合理又符合趨勢的選擇。
+	
+	--
+	
+一、技術規格書（Technical Specification Document）
+	定義：
+	
+		技術規格書是一份詳細說明網站或系統開發所需的技術細節與實作需求的文件，通常由開發人員、系統架構師或專案經理編寫。
+
+		內容通常包含：
+		系統架構說明（如前後端架構、API設計、資料流）
+
+		資料庫設計（資料表結構、關聯、索引）
+
+		開發語言與框架（如 HTML/CSS/JavaScript、Vue.js、Laravel、.NET 等）
+
+		第三方服務/套件（如地圖 API、支付系統）
+
+		安全性考量（如認證方式、資料加密）
+
+		部署方式與伺服器環境（如 Linux/Windows、Docker、CI/CD 流程）
+
+		版本控制策略（如使用 Git、分支策略）
+
+	目的：
+		
+		協助開發團隊理解系統的技術需求
+
+		作為日後維護與升級的參考依據
+
+		減少溝通成本與錯誤理解
+
+二、網站地圖（Sitemap）
+	
+	定義：
+	
+		網站地圖是一種用來呈現網站頁面結構與內容階層的視覺圖或文字描述，通常由網站企劃或 UX 設計師規劃。
+
+	兩種常見形式：
+	
+		視覺化網站地圖（Visual Sitemap）
+
+	例如：
+
+		- 首頁
+		  ├─ 關於我們
+		  ├─ 服務項目
+			  ├─ 產品A
+			  └─ 產品B
+		  ├─ 最新消息
+		  └─ 聯絡我們
+		XML Sitemap（給搜尋引擎用）
+
+		為 SEO 使用，提交給 Google/Bing 等搜尋引擎，告訴它們網站有哪些頁面。
+
+	內容通常包含：
+	
+		每個頁面的標題與 URL
+
+		頁面之間的階層與連結關係
+
+		若是 XML Sitemap，會包含更新頻率、優先度等屬性
+
+	目的：
+	
+		作為設計與開發的導覽參考
+
+		幫助搜尋引擎更有效地索引頁面
+
+		與客戶溝通網站內容範圍與架構
+
+	總結比較：
+		
+		項目			技術規格書									網站地圖
+
+		目的			定義系統技術細節							規劃網站內容與頁面架構
+
+		使用對象		開發人員、系統架構師					企劃、設計師、客戶、SEO
+	
+		格式			文件（PDF、Word、Notion 等）		圖表、樹狀結構、XML
+			
+		是否必備		複雜網站必備								幾乎所有網站都需要
+	
+	
+	
+	1. 靜岡縣觀光特輯網站 🌄🍵
+		
+		▶ 你剛好熟悉靜岡，這是很自然的選題！
+
+		頁面段落建議：
+
+		首屏：富士山 + 開場動畫（Parallax）
+
+		介紹靜岡的自然特色（富士山、駿河灣）
+
+		靜岡茶與食文化（滾動時出現茶田動畫）
+
+		景點導覽（滑動切換不同地區）
+
+		結尾 CTA（來靜岡旅行吧！）
+			
+	
+		額外加分技巧與想法
+		
+		使用 ScrollTrigger（GSAP）、Lenis + Locomotive Scroll 或 Scrollama.js 做動畫控制。
+
+		結合 SVG animation 或 Canvas 背景粒子動畫。
+
+		加入「懸浮物件」、「滑動進場」讓視覺更有層次。
+
+		手機版請務必優化互動區塊（不要只考慮桌機視覺）。
+	
+	-
+	當然可以！你可以在首屏的 Parallax 動畫結束後，利用 JavaScript 和 CSS 動畫效果，
+	把原本的富士山視覺平滑過渡成靜岡的其他風景。這種效果在視覺上很吸引人，而且技術上不複雜。
+
+	方法概念
+	
+	1. 使用多個背景圖層 + CSS transition 或 JavaScript 控制切換
+	
+		先載入富士山圖作為背景。
+
+		Parallax 動畫結束後，使用 setTimeout 或動畫結束事件（animationend）觸發背景切換。
+
+		切換至靜岡其他風景，例如：茶園、駿河灣、三保之松原等。
+	
+		html:
+			<section id="hero" class="hero">
+				<div class="bg-layer" id="bg-fuji"></div>
+				<div class="bg-layer hidden" id="bg-suruga"></div>
+				<div class="hero-text">
+					<h1>靜岡縣觀光特輯</h1>
+					<p>從富士山到茶田的風景之旅</p>
+				</div>
+			</section>
+
+		css:
+			.hero {
+			  position: relative;
+			  height: 100vh;
+			  overflow: hidden;
+			}
+			.bg-layer {
+			  position: absolute;
+			  width: 100%;
+			  height: 100%;
+			  background-size: cover;
+			  background-position: center;
+			  transition: opacity 1.5s ease;
+			}
+			#bg-fuji {
+			  background-image: url('fuji.jpg');
+			  z-index: 1;
+			}
+			#bg-suruga {
+			  background-image: url('suruga.jpg');
+			  z-index: 2;
+			  opacity: 0;
+			}
+			.bg-layer.show {
+			  opacity: 1;
+			}
+			.hidden {
+			  display: none;
+			}
+
+		js:
+			// Parallax 動畫結束後觸發切換（你也可以用 IntersectionObserver）
+			setTimeout(() => {
+			  const suruga = document.getElementById('bg-suruga');
+			  suruga.classList.remove('hidden');
+			  requestAnimationFrame(() => {
+				suruga.classList.add('show'); // 漸變顯示
+			  });
+			}, 5000); // 5秒後切換（可根據實際動畫時間調整）
+-
+ScrollTrigger 是 GSAP（GreenSock Animation Platform） 的一個插件，用來建立「捲動觸發」動畫效果。
+它讓開發者可以很簡單地根據使用者捲動頁面的進度來觸發、控制動畫或同步動畫進度，廣泛應用於視差滾動、滾動進場動畫等視覺效果中。
+
+	基本概念
+		ScrollTrigger 可用來：
+
+			在捲動到某個元素時觸發動畫
+
+			根據捲動進度改變動畫進度（如滾動同步動畫）
+
+			固定元素（類似 position: sticky，但更強大）
+
+			增加「進場/離場」動畫控制
+
+			建立視差滾動效果
+
+	引入 ScrollTrigger
+		
+		在 HTML 中載入：
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+	
+		然後註冊插件（若使用模組或 webpack）：
+			js:
+				gsap.registerPlugin(ScrollTrigger);
+
+		基本用法
+			1. 捲動觸發動畫：
+				gsap.from(".box", {
+				  scrollTrigger: ".box", // 目標元素
+				  y: 100,
+				  opacity: 0,
+				  duration: 1
+				});
+
+			2. 更進階設定：
+				gsap.from(".box", {
+				  scrollTrigger: {
+					trigger: ".box",
+					start: "top 80%",    // 元素 top 到達視窗 80% 處時觸發
+					end: "bottom 20%",   // 元素 bottom 到達視窗 20% 處時結束
+					toggleActions: "play pause resume reset", // 觸發動作
+					markers: true        // 顯示觸發點（開發時用）
+				  },
+				  x: -100,
+				  opacity: 0,
+				  duration: 1
+				});
+
+			3. 捲動同步動畫（scrub）：
+				gsap.to(".box", {
+				  scrollTrigger: {
+					trigger: ".box",
+					start: "top center",
+					end: "bottom top",
+					scrub: true // 捲動進度與動畫同步
+				  },
+				  x: 300
+				});
+
+	
+		常見選項					說明
+		
+		trigger					用來觸發動畫的元素
+		
+		start						動畫開始的捲動位置
+		
+		end						動畫結束的捲動位置
+		
+		scrub						是否與捲動同步，可設為 true 或秒數延遲
+		
+		toggleActions			四個階段動作：onEnter onLeave onEnterBack onLeaveBack
+		
+		pin						是否釘住元素（類似 sticky）
+		
+		markers					顯示輔助線和文字（開發時使用）
+
+	範例：固定元素並滾動動畫
+		js:
+			gsap.to(".section", {
+			  scrollTrigger: {
+				trigger: ".section",
+				pin: true,        // 固定這個 section
+				start: "top top",
+				end: "+=500",     // 捲動 500px 後結束
+				scrub: true
+			  },
+			  x: 200
+			});
+
+	應用範圍
+	
+		視差滾動動畫（Parallax）
+
+		一頁式網站捲動動畫
+
+		捲動驅動的 SVG 或 Canvas 動畫
+
+		圖片進場、文字 fade-in、黏著元素導覽列等
+-
+
+GSAP + ScrollTrigger + Lenis	⭐⭐⭐⭐✅	✅ 最穩定、彈性最大、文檔齊全，適合 5 天完成
+
+搭配 SVG animation 或 Canvas 背景粒子動畫
+
+GSAP + ScrollTrigger + Lenis （推薦首選）
+
+	為什麼適合你：
+
+		GSAP + ScrollTrigger 本身就已經能做 95% 動畫需求
+
+		Lenis 加入平滑滾動 + ScrollTrigger 整合很好
+
+		範例多、教學多、社群活躍
+
+		開發流程簡單化：
+
+		製作 HTML + CSS Layout
+
+		用 Lenis 套 smooth scroll
+
+		用 ScrollTrigger 控制動畫（進入、離開、滾動進度）
+
+		學習成本：中低
+		整合難度：低
+		可重用性：高
+		外觀精緻度：高
+
+	官方整合參考：https://greensock.com/docs/v3/Plugins/ScrollTrigger/static.scrollerProxy()
+
+建議你怎麼做（快速流程）
+
+	目標：5 天內做完一個有動畫視覺感的滾動頁面
+
+	使用組合：GSAP + ScrollTrigger + Lenis
+
+	建議流程：
+	
+	天數	工作項目
+	
+	Day 1	構思內容（幾個段落／動畫節點）+ HTML 架構
+	
+	Day 2	套上 CSS + Lenis 滾動
+	
+	Day 3	加入 GSAP/ScrollTrigger 動畫（圖片進場、文字淡入）
+	
+	Day 4	精修動畫節奏 + 響應式設計
+	
+	Day 5	整體調整 + 測試 + 發佈
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

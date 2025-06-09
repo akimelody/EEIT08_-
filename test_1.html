@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>靜岡單頁下拉範例</title>
+
+<!-- GSAP + ScrollTrigger + Lenis -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.24/bundled/lenis.min.js"></script>
+
+<!-- Swiper CSS & JS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: "Noto Sans TC", sans-serif;
+    scroll-behavior: smooth;
+    background: #f5f5f5;
+  }
+  section {
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  /* 第一屏富士山 parallax */
+  #section1 {
+    position: relative;
+    width: 100vw;        /* 滿版寬度 */
+    height: 100vh;       /* 滿版高度 */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #section1 .parallax-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+    will-change: transform;
+    z-index: -1;
+  }
+  #section1 .swiper {
+    width: 80%;
+    max-width: 900px;
+    margin-top: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  /* 2、3區 */
+  .gsap-section {
+    background: white;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    padding: 3rem 2rem;
+  }
+  /* 4區 */
+  #section4 {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  #section4 .calendar {
+    flex: 1;
+    background: #e0f2f1;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  #section4 .event-swiper {
+    flex: 1.5;
+    border-radius: 8px;
+  }
+  /* 5區 */
+  #section5 .swiper {
+    width: 100%;
+    max-width: 1000px;
+  }
+  /* 6區 */
+  #section6 {
+    display: flex;
+    gap: 1rem;
+  }
+  #section6 iframe {
+    flex: 1;
+    height: 400px;
+    border: none;
+    border-radius: 10px;
+  }
+  /* 7區頁尾 */
+  footer {
+    background: #222;
+    color: #ccc;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+
+  /* 日曆簡易樣式 */
+  .calendar table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .calendar th, .calendar td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  .calendar th {
+    background: #00796b;
+    color: white;
+  }
+
+  /* 活動輪播、景點輪播滑鼠樣式 */
+  .swiper-slide {
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. 首屏 -->
+<section id="section1">
+  <div class="parallax-bg"></div>
+  <h1>歡迎來到靜岡 - 富士山</h1>
+  <div class="swiper mySwiper1">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/1599px-Miho_no_Matsubara_and_Mount_Fuji.jpg" alt="三保松原" style="width:100%" />
+      </div>
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/Izu Peninsula.jpg" alt="伊豆半島" style="width:100%" />
+      </div>
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/Izu_Peninsula_from_Mount_Echizen.jpg" alt="伊豆半島" style="width:100%" />
+      </div>
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/Mount_Fuji_from_Nihondaira.jpg" alt="日本平" style="width:100%" />
+      </div>
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/Atami_20170211-1.jpg" alt="熱海" style="width:100%" />
+      </div>
+      <div class="swiper-slide">
+        <img src="shizuoka_picture/Oigawa_railway_E101_20150405_01.jpg" alt="大井川鐵道" style="width:100%" />
+      </div>
+    </div>     
+  </div>
+    <!-- 分頁 -->
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- 2. 靜岡茶與抹茶 -->
+<section id="section2" class="gsap-section">
+  <h2>靜岡茶與抹茶</h2>
+  <p>用GSAP與Lenis來呈現這裡的動畫效果。</p>
+</section>
+
+<!-- 3. 歷史-德川家康 -->
+<section id="section3" class="gsap-section">
+  <h2>歷史 - 德川家康</h2>
+  <p>同樣用GSAP+ScrollTrigger+Lenis實現滾動動畫。</p>
+</section>
+
+<!-- 4. 日曆＋近期活動輪播 -->
+<section id="section4">
+  <div class="calendar">
+    <h3>活動日曆</h3>
+    <table>
+      <thead>
+        <tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+        <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+        <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+        <tr><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td></tr>
+        <tr><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="event-swiper swiper mySwiper2">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="活動1" style="width:100%; border-radius: 10px;" />
+        <p>春季茶會</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80" alt="活動2" style="width:100%; border-radius: 10px;" />
+        <p>抹茶節慶</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="活動3" style="width:100%; border-radius: 10px;" />
+        <p>文化展</p>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- 5. 靜岡景點圖片輪播 -->
+<section id="section5">
+  <h2>靜岡各景點</h2>
+  <div class="swiper mySwiper3">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" onclick="window.open('https://www.shizuoka-guide.com/mount-fuji', '_blank')">
+        <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=600&q=80" alt="富士山" style="width:100%; border-radius:10px;" />
+        <p>富士山</p>
+      </div>
+      <div class="swiper-slide" onclick="window.open('https://www.shizuoka-guide.com/shuzenji', '_blank')">
+        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80" alt="修善寺" style="width:100%; border-radius:10px;" />
+        <p>修善寺</p>
+      </div>
+      <div class="swiper-slide" onclick="window.open('https://www.shizuoka-guide.com/sunpu', '_blank')">
+        <img src="https://images.unsplash.com/photo-1526483360610-5649f4d7e15d?auto=format&fit=crop&w=600&q=80" alt="駿府城" style="width:100%; border-radius:10px;" />
+        <p>駿府城</p>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- 6. Google 地圖 + IG貼文 -->
+<section id="section6">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.9713685774167!2d138.38307831525837!3d34.97556098055214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601a01e226edc851%3A0x75d16a44f9605a42!2z5aSn5a24IOWQhuWIs-WfuuW4gOiVp-iqoeS7iuW4gOiDkurrlj6Hni7rlj5jkuK3kurrmt7HvvJrlj7cg55Sy5qC8!5e0!3m2!1szh-TW!2sjp!4v1685721123456" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <iframe
+    src="https://www.instagram.com/p/CuQjNmnNvQ1/embed"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowtransparency="true"
+    style="border:none; overflow:hidden;"
+  ></iframe>
+</section>
+
+<!-- 7. 頁底 -->
+<footer>
+  <p>© 2025 靜岡旅遊網站｜聯絡我們｜隱私政策｜網站地圖</p>
+</footer>
+
+<script>
+  // 初始化 Lenis 平滑滾動
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => t * (2 - t),
+    smooth: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // GSAP + ScrollTrigger 2、3區簡單動畫
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from("#section2 p", {
+    scrollTrigger: {
+      trigger: "#section2",
+      start: "top 80%",
+      end: "bottom 20%",
+      toggleActions: "play none none reverse",
+    },
+    y: 50,
+    opacity: 0,
+    duration: 1,
+  });
+
+  gsap.from("#section3 p", {
+    scrollTrigger: {
+      trigger: "#section3",
+      start: "top 80%",
+      end: "bottom 20%",
+      toggleActions: "play none none reverse",
+    },
+    x: -100,
+    opacity: 0,
+    duration: 1,
+  });
+
+  // 富士山 Parallax 滾動效果
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    const bg = document.querySelector("#section1 .parallax-bg");
+    // 簡單垂直位移調整
+    bg.style.transform = `translateY(${scrollY * 0.3}px) scale(1.1)`;
+  });
+
+  // 初始化 Swiper 輪播
+  const swiper1 = new Swiper(".mySwiper1", {
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    autoplay: {
+      delay: 3000,
+    },
+  });
+
+  const swiper2 = new Swiper(".mySwiper2", {
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    slidesPerView: 1,
+    autoplay: {
+      delay: 3500,
+    },
+  });
+
+  const swiper3 = new Swiper(".mySwiper3", {
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    slidesPerView: 3,
+    spaceBetween: 20,
+    autoplay: {
+      delay: 3500,
+    },
+  });
+</script>
+
+</body>
+</html>

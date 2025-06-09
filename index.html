@@ -1,0 +1,706 @@
+  <!DOCTYPE html>
+  <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>靜岡風景</title>
+
+    <!-- 外部資源 -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap" rel="stylesheet">
+
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body, html { overflow-x: hidden; font-family: 'Shippori Mincho', serif; }
+
+      /* 首屏 */
+      #hero {
+        position: relative;
+        height: 100vh;
+        z-index: 5;
+        overflow: hidden;
+      }
+
+      .bg-fuji, .pagoda {
+        position: absolute;
+        width: 100%;
+        height: 120%;
+        background-size: cover;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+      }
+
+      .bg-fuji {
+        z-index: 1;
+      }
+
+      .pagoda {
+        opacity: 0;
+        transition: opacity 2s ease;
+        z-index: 2;
+      }
+
+      .pagoda.visible {
+        opacity: 1;
+      }
+
+      .title {
+        position: absolute;
+        bottom: 20px;
+        left: 50px;
+        font-size: 12rem;
+        color: white;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 2s ease;
+        z-index: 4;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        pointer-events: none;
+      }
+
+      .title.visible {
+        opacity: 1;
+      }
+      .intro-section {
+        height: 75vh;
+        background: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        padding: 0 2rem;
+      }
+      /*所有介紹區塊*/
+      .hero_content p {
+        color: #2e5e3e;
+        font-size: 1.6rem;
+        font-weight: 600;
+        max-width: 1500px;
+        margin: 0 auto;
+        line-height: 2;
+      }
+      .shizuoka-tea_content p {
+        color: #2e5e3e;
+        font-size: 1.6rem;
+        font-weight: 600;
+        max-width: 1500px;
+        margin: 0 auto;
+        line-height: 2;
+      }
+      .transition-text {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 3s ease 1s, transform 3s ease 1s;
+      }
+
+      .transition-text.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+
+      /* 靜岡茶園區塊 */
+      .shizuoka-tea {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .bg-image {
+        background-image: url('shizuoka_picture/shizuoka_tea_01.jpg');
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: none;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(7, 89, 11, 0.7), transparent);
+        display: flex;
+        align-items: center;
+        padding-left: 5%;
+        opacity: 0;
+      }
+
+      .text_group_1 p {
+        font-size: 2rem;
+        color: white;
+        margin: 1rem 0;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        text-shadow: 1px 1px 1px rgba(6, 34, 0, 0.7);
+        /*transform: translateX(-50px);  GSAP 會疊加新的 transform，而不是取代！ */
+      }
+      /*靜岡茶*/
+      .shizuoka-tea_2 {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .bg-image_2 {
+        background-image: url('shizuoka_picture/shizuoka_tea_02.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: none;
+      }
+
+      .mask_2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to left, rgba(184, 139, 5, 0.7), transparent);
+        display: flex;
+        align-items: center;
+        padding-left: 5%;
+        opacity: 0;
+      }
+
+      .text_group_2 p {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;      /* 靠右對齊 */
+        position: absolute;
+        right: 30vw;
+        top: -40vh;
+        height: 110vh;
+        justify-content: center;
+        writing-mode: vertical-rl;  /* 直書，從右到左 */
+        text-align: right;
+        font-size: 2rem;
+        color: white;
+        margin: 1rem 0;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        text-shadow: 1px 1px 1px rgba(6, 34, 0, 0.7);
+        /*transform: translateX(-50px);  GSAP 會疊加新的 transform，而不是取代！ */
+      }
+      /*抹茶*/
+      .shizuoka-tea_3 {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .bg-image_3 {
+        background-image: url('shizuoka_picture/shizuoka_tea_03.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+        background-color: #a6db51;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: none;
+      }
+      .text_group_3 p {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;      /* 靠右對齊 */
+        position: absolute;
+        left: 10vw;
+        top: -40vh;
+        height: 110vh;
+        justify-content: center;
+        writing-mode: vertical-rl;  /* 直書，從右到左 */
+        text-align: right;
+        font-size: 1.8rem;
+        color: rgb(36, 71, 0);
+        margin: 1rem 0;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        /*transform: translateX(-50px);  GSAP 會疊加新的 transform，而不是取代！ */
+      }
+      /* 輪播區塊 */
+      #swiperSection {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .swiper-slide {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+
+      .swiper-caption {
+        position: absolute;
+        bottom: 70px;
+        left: 30px;
+        font-size: 5rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        z-index: 10;
+        pointer-events: none;
+      }
+      /*輪播介紹*/
+      .text-slider {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        height: 5em;
+        overflow: hidden;
+        font-family: 'Noto Serif JP', serif;
+        font-size: 1.3rem;
+        color: #2e5c00;
+      }
+
+      .text-group {
+        transition: transform 0.6s ease-in-out;
+        display: flex;
+        flex-direction: column;
+      }
+      .text-item {
+        height: 5em; /* 每段文字高度一致 */
+        display: flex;
+        align-items: center;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <!-- 1. 首屏 -->
+    <section id="hero">
+      <div class="bg-fuji" style="background-image: url('shizuoka_picture/首屏去背.png');"></div>
+      <div id="pagoda" class="pagoda" style="background-image: url('shizuoka_picture/photo-1578271887552-5ac3a72752bc.png');"></div>
+      <h1 class="title" id="shizuokaText">靜岡</h1>
+    </section>
+
+    <div class="intro-section" style="height: 35vh; background: #fff;">
+      <div class="hero_content">
+        <p class="transition-text">靜岡縣位於日本本州中部，坐落於富士山腳下，面朝駿河灣。</p>
+        <p class="transition-text">氣候溫暖、雨量適中，地形自海岸延伸至群山，孕育出豐富自然與人文交織的風景。</p>
+        <p class="transition-text">靜岡不僅是富士山最美的觀賞地之一，更是日本茶的重要產地，擁有悠久的茶文化與傳統工藝。</p>
+      </div>
+    </div>
+
+    <!-- 2. 茶園區塊 -->
+    <section class="shizuoka-tea" id="teaSection_1">
+      <div class="bg-image"></div>
+      <div class="mask">
+        <div class="text_group_1">
+          <p><b>青嶺疊翠，煙霞繞山中</b></p>
+          <p><b>茶畦如畫，幽靜映心胸</b></p>
+          <p><b>一盞清茗，洗塵思無窮</b></p>
+          <p><b>片刻悠然，天地共從容</b></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="intro-section" style="height: 35vh; background: #fff;">
+      <div class="shizuoka-tea_content">
+        <p class="transition-text">靜岡茶園分布於山坡與丘陵地帶，晨霧輕籠，泉水潺潺。</p>
+        <p class="transition-text">得天獨厚的自然條件，使茶樹能在陽光與霧氣交織的環境中緩慢生長，茶葉蘊含更細緻的香氣與甘味。</p>
+        <p class="transition-text">靜岡茶以清爽、醇厚著稱，從蒸製、揉捻到烘焙，每一道工序都凝聚職人百年來的用心與堅持。</p>
+      </div>
+    </div>
+
+    <section class="shizuoka-tea_2" id="teaSection_2">
+      <div class="bg-image_2"></div>
+      <div class="mask_2">
+        <div class="text_group_2">
+          <p><b>一葉入心&nbsp;&nbsp;&nbsp;靜岡的山風與陽光悄然流轉。</b></p>
+          <p><b>在每一口茶湯中&nbsp;&nbsp;&nbsp;品味富士山腳的清晨。</b></p>
+          <p><b>不只是茶&nbsp;&nbsp;&nbsp;更是一段與自然共鳴的旅程。</b></p>
+          <p><b>茶香淡然&nbsp;&nbsp;&nbsp;卻在心底留下深刻的記憶。</b></p>
+          <p><b>靜岡茶&nbsp;&nbsp;&nbsp;一杯即可靜心，一壺足以入境。</b></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="intro-section" style="height: 45vh; background: #fff;">
+      <div class="shizuoka-tea_content">
+        <p class="transition-text">靜岡抹茶產自日本最重要的茶葉產區&nbsp;&nbsp;─&nbsp;&nbsp;靜岡縣，</p>
+        <p class="transition-text">這裡擁有溫暖濕潤的氣候、純淨山泉與富含礦物質的土壤，是培育高品質茶葉的理想環境。</p>
+        <p class="transition-text">靜岡抹茶選用蒸菁綠茶（蒸して作る）為基礎，經過遮光栽培、精細研磨，使茶粉色澤翠綠、香氣清雅。</p>
+        <p class="transition-text">與京都宇治抹茶相比，靜岡抹茶口感更加溫和、略帶自然青草香，適合純飲或搭配日式甜點享用。</p>
+      </div>
+    </div>
+
+    <section class="shizuoka-tea_3" id="teaSection_3">
+      <div class="bg-image_3"></div>
+      <div class="mask_3">
+        <div class="text_group_3">
+          <p><b>一抹翠綠&nbsp;&nbsp;，蘊藏山川與陽光的溫柔。</b></p>
+          <p><b>茶香緩緩綻放&nbsp;&nbsp;，是靜岡山風送來的清新問候。</b></p>
+          <p><b>石臼慢磨的靜岡抹茶&nbsp;&nbsp;，每口都是時光的沉澱。</b></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="intro-section" style="height: 45vh; background: #fff;">
+      <div class="shizuoka-tea_content">
+        <p class="transition-text">靜岡抹茶產自日本最重要的茶葉產區&nbsp;&nbsp;─&nbsp;&nbsp;靜岡縣，</p>
+        <p class="transition-text">這裡擁有溫暖濕潤的氣候、純淨山泉與富含礦物質的土壤，是培育高品質茶葉的理想環境。</p>
+        <p class="transition-text">靜岡抹茶選用蒸菁綠茶（蒸して作る）為基礎，經過遮光栽培、精細研磨，使茶粉色澤翠綠、香氣清雅。</p>
+        <p class="transition-text">與京都宇治抹茶相比，靜岡抹茶口感更加溫和、略帶自然青草香，適合純飲或搭配日式甜點享用。</p>
+      </div>
+    </div>
+      <!-- . 輪播區塊 -->
+    <section id="swiperSection">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/1599px-Miho_no_Matsubara_and_Mount_Fuji.jpg')">
+            <div class="swiper-caption">靜岡 · 三保松原</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/Izu Peninsula.jpg')">
+            <div class="swiper-caption">靜岡 · 伊豆半島</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/Izu_Peninsula_from_Mount_Echizen.jpg')">
+            <div class="swiper-caption">靜岡 · 伊豆半島</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/Mount_Fuji_from_Nihondaira.jpg')">
+            <div class="swiper-caption">靜岡 · 日本平</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/Atami_20170211-1.jpg')">
+            <div class="swiper-caption">靜岡 · 熱海</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/Oigawa_railway_E101_20150405_01.jpg')">
+            <div class="swiper-caption">靜岡 · 大井川鐵道</div>
+          </div>
+          <div class="swiper-slide" style="background-image:url('shizuoka_picture/photo-1708446637293-13b8dddbc97b.jpg')">
+            <div class="swiper-caption">靜岡 · 富士山</div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <div class="text-slider">
+      <div class="text-group">
+        <div class="text-item">富士山與松林交織的奇景，傳說中的羽衣天女曾在此飄然降臨。</div>
+        <div class="text-item">火山與海蝕地形雕刻出的天然藝術，四季皆宜的風光明媚。</div>
+        <div class="text-item">眺望富士與駿河灣的絕景之地，晴日可見山海相擁，晨昏皆成畫。</div>
+        <div class="text-item">蒸氣火車穿越山川茶園，時光彷彿倒轉，沿途是靜岡最溫柔的風景。</div>
+        <div class="text-item">古老溫泉之都，泡湯與海濱散策交織，山城與濱海之美，日夜皆有不同情調。</div>
+      </div>
+    </div>
+
+
+    <div style="height: 200vh; background: #fff;"></div>
+
+    <!-- 套件 & 動畫初始化 -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.24/bundled/lenis.min.js"></script>
+    <script>
+      AOS.init();
+
+      // Parallax 動畫控制
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const pagoda = document.getElementById('pagoda');
+        const text = document.getElementById('shizuokaText');
+
+        if (scrollY > 50) pagoda.classList.add('visible');
+        if (scrollY > 100) text.classList.add('visible');
+      });
+      // 文字在畫面中滑入時才淡入
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      });
+      document.querySelectorAll('.transition-text').forEach(el => observer.observe(el));
+
+
+
+
+      // Lenis 平滑滾動初始化
+      const lenis = new Lenis();
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // ScrollTrigger 跟 Lenis 同步
+      lenis.on('scroll', ScrollTrigger.update);
+      ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+          return arguments.length ? lenis.scrollTo(value) : lenis.scroll;
+        },
+        getBoundingClientRect() {
+          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        },
+        pinType: document.body.style.transform ? "transform" : "fixed", // 自動選擇最適模式
+      });
+      // ScrollTrigger.addEventListener("refresh", () => lenis.update());
+      ScrollTrigger.refresh();
+
+      // 預設設定文字初始狀態
+      gsap.set(".text_group_1 p:nth-child(1)", {opacity: 0, x: -50, y: 20});
+      gsap.set(".text_group_1 p:nth-child(2)", {opacity: 0, x: -50, y: 20});
+      gsap.set(".text_group_1 p:nth-child(3)", {opacity: 0, x: -70, y: 20});
+      gsap.set(".text_group_1 p:nth-child(4)", {opacity: 0, x: -50, y: 20});
+
+      // 茶園背景timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_1",
+          start: "top 90%",
+          end: "top 20%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,  // 明確告訴 ScrollTrigger 使用 body 當滾動容器
+        }
+      });
+      // 茶園背景圖片漸入
+      tl.to("#teaSection_1 .bg-image", {
+        opacity: 1,
+        y: 0,
+        duration: 3,
+        ease: "power2.out"
+      }, 0);
+
+      // 遮罩漸入
+      tl.to("#teaSection_1 .mask", {
+        opacity: 1,
+        duration: 3,
+        ease: "power2.out"
+      }, 0.3);
+
+      // 茶園文字timeline
+      const tl_text = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_1",
+          start: "top 60%",
+          end: "top 10%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,  // 明確告訴 ScrollTrigger 使用 body 當滾動容器
+        }
+      });
+      // 茶園文字群組漸入（用 stagger）
+      tl_text.to(".text_group_1 p:nth-child(1)", {
+        opacity: 1,
+        x: 70,
+        y: -95,
+        duration: 3,
+        ease: "power2.out",
+      });
+
+      tl_text.to(".text_group_1 p:nth-child(2)", {
+        opacity: 1,
+        x: 200,
+        y: -50,
+        duration: 3,
+        ease: "power2.out",
+      });
+
+      tl_text.to(".text_group_1 p:nth-child(3)", {
+        opacity: 1,
+        x: 0,
+        y: 10,
+        duration: 3,
+        ease: "power2.out",
+      });
+
+      tl_text.to(".text_group_1 p:nth-child(4)", {
+        opacity: 1,
+        x: 130,
+        y: 60,
+        duration: 3,
+        ease: "power2.out",
+      });
+      
+      
+      // 靜岡茶背景圖片漸入
+      const t2 = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_2",
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,
+        }
+      });
+
+      t2.to("#teaSection_2 .bg-image_2", {
+        opacity: 1,
+        y: 0,
+        duration: 3,
+        ease: "power2.out"
+      }, 0);
+
+      // 靜岡茶遮罩漸入
+      t2.to("#teaSection_2 .mask_2", {
+        opacity: 1,
+        duration: 3,
+        ease: "power2.out"
+      }, 0.3);
+
+      // 靜岡茶文字timeline
+      const t2_text = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_2",
+          start: "top 60%",
+          end: "top 10%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,  // 明確告訴 ScrollTrigger 使用 body 當滾動容器
+        }
+      });
+      gsap.set(".text_group_2 p:nth-child(1)", {opacity: 0, x: 400, y: -50});
+      gsap.set(".text_group_2 p:nth-child(2)", {opacity: 0, x: 250, y: -50});
+      gsap.set(".text_group_2 p:nth-child(3)", {opacity: 0, x: 100, y: -50});
+      gsap.set(".text_group_2 p:nth-child(4)", {opacity: 0, x: -50, y: -50});
+      gsap.set(".text_group_2 p:nth-child(5)", {opacity: 0, x: -200, y: -50});
+      // 文字群組漸入（用 stagger）
+      t2_text.to(".text_group_2 p:nth-child(1)", {
+        opacity: 1,
+        x: 400,
+        y: 110,
+        duration: 3,
+        ease: "power2.out",
+      }, 1);
+
+      t2_text.to(".text_group_2 p:nth-child(2)", {
+        opacity: 1,
+        x: 250,
+        y: 170,
+        duration: 3,
+        ease: "power2.out",
+      }, 3);
+
+      t2_text.to(".text_group_2 p:nth-child(3)", {
+        opacity: 1,
+        x: 100,
+        y: 130,
+        duration: 3,
+        ease: "power2.out",
+      }, 5);
+
+      t2_text.to(".text_group_2 p:nth-child(4)", {
+        opacity: 1,
+        x: -50,
+        y: 150,
+        duration: 3,
+        ease: "power2.out",
+      }, 7);
+
+      t2_text.to(".text_group_2 p:nth-child(5)", {
+        opacity: 1,
+        x: -200,
+        y: 120,
+        duration: 3,
+        ease: "power2.out",
+      }, 9);
+
+      // 抹茶背景圖片漸入
+      const t3 = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_3",
+          start: "top 70%",
+          end: "top 30%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,
+        }
+      });
+
+      t3.to("#teaSection_3 .bg-image_3", {
+        opacity: 1,
+        y: 0,
+        duration: 3,
+        ease: "power2.out"
+      }, 0);
+
+      // 抹茶茶文字timeline
+      const t3_text = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#teaSection_3",
+          start: "top 60%",
+          end: "top 10%",
+          toggleActions: "play none none reverse",
+          scroller: document.body,
+        }
+      });
+      gsap.set(".text_group_3 p:nth-child(1)", {opacity: 0, x: 200, y: -50});
+      gsap.set(".text_group_3 p:nth-child(2)", {opacity: 0, x: 75, y: -50});
+      gsap.set(".text_group_3 p:nth-child(3)", {opacity: 0, x: -50, y: -50});
+
+      t3_text.to(".text_group_3 p:nth-child(1)", {
+        opacity: 1,
+        x: 200,
+        y: 270,
+        duration: 3,
+        ease: "power2.out",
+      }, 1);
+
+      t3_text.to(".text_group_3 p:nth-child(2)", {
+        opacity: 1,
+        x: 75,
+        y: 300,
+        duration: 3,
+        ease: "power2.out",
+      }, 3);
+
+      t3_text.to(".text_group_3 p:nth-child(3)", {
+        opacity: 1,
+        x: -50,
+        y: 280,
+        duration: 3,
+        ease: "power2.out",
+      }, 5);
+
+      // 輪播_初始化 Swiper
+        new Swiper('.swiper', {
+          loop: true,
+          effect: 'fade',
+          fadeEffect: { crossFade: true },
+          pagination: { el: '.swiper-pagination', clickable: true },
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+          },
+          speed: 3000
+        });
+        gsap.registerPlugin(ScrollTrigger);
+      // 與輪播同步
+      const swiper = new Swiper('.swiper-container', {
+        on: {
+          slideChange: function () {
+            const textGroup = document.querySelector('.text-group');
+            const offset = -this.activeIndex * 5; // 5em 單位
+            textGroup.style.transform = `translateY(${offset}em)`;
+          }
+        }
+      });
+    </script>
+  </body>
+  </html>
